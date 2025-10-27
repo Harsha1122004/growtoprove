@@ -1,9 +1,9 @@
 import React from "react";
+import "../App.css";
 
 export default function Hero() {
   return (
     <>
-      {/* 🌐 NAVBAR */}
       <nav className="topbar">
         <div className="brand">
           <div className="logo">G</div>
@@ -11,7 +11,7 @@ export default function Hero() {
         </div>
 
         <div className="nav-links">
-          <a href="#discover" className="btn ghost small">
+          <a href="#motion-graphics" className="btn ghost small">
             Discover
           </a>
           <a href="#submit" className="btn ghost small">
@@ -25,7 +25,6 @@ export default function Hero() {
         </div>
       </nav>
 
-      {/* 🚀 HERO SECTION */}
       <header className="hero">
         <div className="hero-inner">
           <h1 className="hero-title">
