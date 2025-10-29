@@ -1,28 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
-// Import Modal if you plan to use it for video popups
-// import Modal from "./Modal.jsx";
 
 const sections = {
-  // Note: Use unique IDs for each video item, though keys are used for React list rendering.
   reels: [
-    { id: "r1", src: "https://www.w3schools.com/html/mov_bbb.mp4" },
-    { id: "r2", src: "https://www.w3schools.com/html/movie.mp4" },
+    { id: "r1", src: "https://youtu.be/SqsWohjvR0A" },
+    { id: "r2", src: "https://youtu.be/k95LOTYLDmo" },
     { id: "r3", src: "https://www.w3schools.com/html/mov_bbb.mp4" },
-    { id: "r4", src: "https://www.w3schools.com/html/movie.mp4" },
+    { id: "r4", src: "https://youtu.be/GlOguX6gTm4" },
   ],
   motion: [
-    { id: "m1", src: "https://www.w3schools.com/html/movie.mp4" },
+    { id: "m1", src: "https://youtu.be/SqsWohjvR0A" },
     { id: "m2", src: "https://www.w3schools.com/html/mov_bbb.mp4" },
     { id: "m3", src: "https://www.w3schools.com/html/movie.mp4" },
     { id: "m4", src: "https://www.w3schools.com/html/mov_bbb.mp4" },
   ],
   typography: [
-    { id: "t1", src: "https://www.w3schools.com/html/movie.mp4" },
+    { id: "t1", src: "https://youtu.be/GlOguX6gTm4" },
     { id: "t2", src: "https://www.w3schools.com/html/mov_bbb.mp4" },
     { id: "t3", src: "https://www.w3schools.com/html/movie.mp4" },
     { id: "t4", src: "https://www.w3schools.com/html/mov_bbb.mp4" },
   ],
-  // Add placeholders for other sections referenced in CategoryNav.jsx
   edits: [
     { id: "e1", src: "https://www.w3schools.com/html/mov_bbb.mp4" },
     { id: "e2", src: "https://www.w3schools.com/html/movie.mp4" },
@@ -43,7 +39,7 @@ export default function VideoGrid() {
   const [projects, setProjects] = useState(0);
   const trackRef = useRef(null);
 
-  // 🔁 Smooth auto-scroll for reels (Infinite loop logic)
+  // 🔁 Smooth auto-scroll for reels (Infinite loop)
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
@@ -51,45 +47,53 @@ export default function VideoGrid() {
     const speed = 0.8;
 
     const animateScroll = () => {
-      // Check if the scroll position has reached the end of the first set of duplicated videos
-      if (scrollX >= track.scrollWidth / 2) {
-        scrollX = 0;
-        // Temporarily disable transition for snap back
-        track.style.transition = "none";
-        track.style.transform = `translateX(-${scrollX}px)`;
-        // Re-enable transition on the next frame to maintain smooth scrolling
-        requestAnimationFrame(() => (track.style.transition = "transform 0s"));
-      }
-
+      if (scrollX >= track.scrollWidth / 2) scrollX = 0;
       scrollX += speed;
       track.style.transform = `translateX(-${scrollX}px)`;
-      const animationId = requestAnimationFrame(animateScroll);
-      return animationId;
+      requestAnimationFrame(animateScroll);
     };
-
-    // Set initial transition property for smooth scroll
-    track.style.transition = "transform 0s";
-
-    const animationId = requestAnimationFrame(animateScroll);
-    return () => cancelAnimationFrame(animationId);
+    animateScroll();
   }, []);
 
-  // 🎥 Render Media (Ensures consistent .video-slide wrapping for Demo 1 styling)
-  const renderVideo = (src, key) => (
-    <div className="video-slide" key={key}>
+  // 🎥 Render YouTube, Drive, or MP4
+  const renderMedia = (src, key) => {
+    // YouTube Embed
+    if (src.includes("youtube.com") || src.includes("youtu.be")) {
+      let videoId = "";
+      if (src.includes("v=")) {
+        videoId = src.split("v=")[1].split("&")[0];
+      } else if (src.includes("youtu.be/")) {
+        videoId = src.split("youtu.be/")[1];
+      }
+
+      return (
+        <iframe
+          key={key}
+          className="media-video"
+          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&showinfo=0`}
+          title={`YouTube video ${videoId}`}
+          frameBorder="0"
+          allow="autoplay; encrypted-media; fullscreen"
+          allowFullScreen
+        ></iframe>
+      );
+    }
+
+    // Google Drive or MP4
+    return (
       <video
+        key={key}
         playsInline
         muted
         loop
         autoPlay
         className="media-video"
-        // Use setActive for the Modal functionality (if implemented)
         onClick={() => setActive({ src, title: key })}
       >
         <source src={src} type="video/mp4" />
       </video>
-    </div>
-  );
+    );
+  };
 
   // ✨ Fade-in scroll animation
   useEffect(() => {
@@ -113,7 +117,7 @@ export default function VideoGrid() {
           if (entry.isIntersecting) {
             let c = 0;
             const clientTimer = setInterval(() => {
-              c += 1;
+              c++;
               setClients(c);
               if (c >= 5) clearInterval(clientTimer);
             }, 200);
@@ -137,7 +141,7 @@ export default function VideoGrid() {
 
   return (
     <div className="video-sections">
-      {/* === 🔥 Reels Section (Contained Cinematic Strip) === */}
+      {/* === 🔥 Reels Section === */}
       <section id="reels" className="video-carousel-container fade-in">
         <div className="section-header">
           <h2 className="section-title">🔥 Featured Reels</h2>
@@ -146,26 +150,25 @@ export default function VideoGrid() {
 
         <div className="video-carousel-mask">
           <div className="video-carousel-track" ref={trackRef}>
-            {/* Duplicate the array for seamless infinite scroll effect */}
             {[...sections.reels, ...sections.reels].map((v, i) =>
-              renderVideo(v.src, `reel-${i}`)
+              renderMedia(v.src, `reel-${i}`)
             )}
           </div>
         </div>
       </section>
 
-      {/* === 🚀 Motion Graphics Section (Grid) === */}
+      {/* === 🚀 Motion Graphics Section === */}
       <section id="motion-graphics" className="motion-grid-section fade-in">
         <div className="section-header">
           <h2 className="section-title">🚀 Motion Graphics</h2>
           <p className="section-sub">Vibrant animations with smooth flow</p>
         </div>
         <div className="media-grid">
-          {sections.motion.map((v, i) => renderVideo(v.src, `motion-${i}`))}
+          {sections.motion.map((v, i) => renderMedia(v.src, `motion-${i}`))}
         </div>
       </section>
 
-      {/* === 🅰️ Typography Section (Grid) === */}
+      {/* === 🅰️ Typography Section === */}
       <section id="typography" className="motion-grid-section fade-in">
         <div className="section-header">
           <h2 className="section-title">🅰️ Typography Animations</h2>
@@ -175,33 +178,34 @@ export default function VideoGrid() {
         </div>
         <div className="media-grid">
           {sections.typography.map((v, i) =>
-            renderVideo(v.src, `typography-${i}`)
+            renderMedia(v.src, `typography-${i}`)
           )}
         </div>
       </section>
 
-      {/* --- Additional Sections (Added for CategoryNav completeness) --- */}
-
+      {/* === ✂️ Edits Section === */}
       <section id="edits" className="motion-grid-section fade-in">
         <div className="section-header">
           <h2 className="section-title">✂️ Edits</h2>
           <p className="section-sub">Precision-cut video stories.</p>
         </div>
         <div className="media-grid">
-          {sections.edits.map((v, i) => renderVideo(v.src, `edits-${i}`))}
+          {sections.edits.map((v, i) => renderMedia(v.src, `edits-${i}`))}
         </div>
       </section>
 
+      {/* === 🧊 3D Visuals === */}
       <section id="visuals" className="motion-grid-section fade-in">
         <div className="section-header">
           <h2 className="section-title">🧊 3D Visuals</h2>
           <p className="section-sub">Depth and dynamic rendering.</p>
         </div>
         <div className="media-grid">
-          {sections.visuals.map((v, i) => renderVideo(v.src, `visuals-${i}`))}
+          {sections.visuals.map((v, i) => renderMedia(v.src, `visuals-${i}`))}
         </div>
       </section>
 
+      {/* === 🔄 Transitions === */}
       <section id="transitions" className="motion-grid-section fade-in">
         <div className="section-header">
           <h2 className="section-title">🔄 Transitions</h2>
@@ -209,7 +213,7 @@ export default function VideoGrid() {
         </div>
         <div className="media-grid">
           {sections.transitions.map((v, i) =>
-            renderVideo(v.src, `transitions-${i}`)
+            renderMedia(v.src, `transitions-${i}`)
           )}
         </div>
       </section>
@@ -245,8 +249,6 @@ export default function VideoGrid() {
           ))}
         </div>
       </section>
-
-      {/* {active && <Modal item={active} onClose={() => setActive(null)} />} */}
     </div>
   );
 }
