@@ -17,11 +17,6 @@
   padding: 0;
 }
 
-@media (max-width: 767px) {
-  .hero-title {
-    display: none; /* This line completely hides the title on mobile */
-  }
-}
 html, body {
   width: 100%;
   overflow-x: hidden;
@@ -134,7 +129,7 @@ html, body {
 }
 
 .hero-title {
-  /* Font size is now the same as the subtitle */
+  /* This will apply to desktop */
   font-size: clamp(14px, 4vw, 17px);
   font-weight: 450;
   line-height: 1.25;
@@ -151,7 +146,7 @@ html, body {
 }
 
 .hero-sub {
-  /* Font size now matches the title */
+  /* This will apply to desktop */
   font-size: clamp(14px, 4vw, 17px);
   line-height: 1.5;
   color: #d6efdc;
@@ -172,6 +167,15 @@ html, body {
   50% { text-shadow: 0 0 12px var(--neon); opacity: 0.94; }
 }
 
+/* ✅ THIS IS THE FIX FOR MOBILE VIEW */
+@media (max-width: 767px) {
+  .hero-title,
+  .hero-sub {
+    /* This overrides the clamp() function on mobile screens */
+    /* and sets a fixed size for both elements. */
+    font-size: 14px;
+  }
+}
 /* =======================
  🧭 CATEGORY NAV
 ======================= */
