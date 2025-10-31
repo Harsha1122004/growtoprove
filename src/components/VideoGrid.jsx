@@ -26,6 +26,7 @@ export default function VideoGrid() {
   const [projects, setProjects] = useState(0);
   const maskRef = useRef(null);
   const fillRef = useRef(null);
+  const autoScrollRef = useRef(null);
 
   // 🎥 YouTube Embed Renderer
   const renderMedia = (src, key) => {
@@ -102,18 +103,51 @@ export default function VideoGrid() {
 
     mask.addEventListener("scroll", updateProgress);
     updateProgress();
-
     return () => mask.removeEventListener("scroll", updateProgress);
   }, []);
 
-  // 🎯 Scroll button logic
-  const scrollLeft = () => {
-    maskRef.current.scrollBy({ left: -400, behavior: "smooth" });
-  };
+  // ▶️ Auto Scroll Logic
+  useEffect(() => {
+    const mask = maskRef.current;
+    if (!mask) return;
 
-  const scrollRight = () => {
-    maskRef.current.scrollBy({ left: 400, behavior: "smooth" });
-  };
+    let scrollSpeed = 1.3; // adjust scroll speed
+    let direction = 1; // 1 = right, -1 = left
+
+    const autoScroll = () => {
+      mask.scrollLeft += scrollSpeed * direction;
+      if (
+        mask.scrollLeft >= mask.scrollWidth - mask.clientWidth - 2 ||
+        mask.scrollLeft <= 0
+      ) {
+        direction *= -1; // reverse direction at edges
+      }
+    };
+
+    autoScrollRef.current = setInterval(autoScroll, 20);
+
+    // Pause on hover or touch
+    const stopScroll = () => clearInterval(autoScrollRef.current);
+    const resumeScroll = () =>
+      (autoScrollRef.current = setInterval(autoScroll, 20));
+
+    mask.addEventListener("mouseenter", stopScroll);
+    mask.addEventListener("mouseleave", resumeScroll);
+    mask.addEventListener("touchstart", stopScroll);
+    mask.addEventListener("touchend", resumeScroll);
+
+    return () => {
+      clearInterval(autoScrollRef.current);
+      mask.removeEventListener("mouseenter", stopScroll);
+      mask.removeEventListener("mouseleave", resumeScroll);
+      mask.removeEventListener("touchstart", stopScroll);
+      mask.removeEventListener("touchend", resumeScroll);
+    };
+  }, []);
+
+  // 🎯 Manual Scroll Buttons
+  const scrollLeft = () => maskRef.current.scrollBy({ left: -400, behavior: "smooth" });
+  const scrollRight = () => maskRef.current.scrollBy({ left: 400, behavior: "smooth" });
 
   return (
     <div className="video-sections">
@@ -127,12 +161,8 @@ export default function VideoGrid() {
         </div>
 
         {/* Scroll Buttons */}
-        <button className="scroll-btn left" onClick={scrollLeft}>
-          ◀
-        </button>
-        <button className="scroll-btn right" onClick={scrollRight}>
-          ▶
-        </button>
+        <button className="scroll-btn left" onClick={scrollLeft}>◀</button>
+        <button className="scroll-btn right" onClick={scrollRight}>▶</button>
 
         {/* Video Carousel */}
         <div className="video-carousel-mask" ref={maskRef}>
@@ -141,6 +171,7 @@ export default function VideoGrid() {
           )}
         </div>
 
+        {/* Progress Bar */}
         <div className="scroll-progress-bar">
           <div className="scroll-progress-fill" ref={fillRef}></div>
         </div>
