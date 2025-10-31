@@ -230,18 +230,11 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Hover + active */
 .category-btn:hover {
   background: var(--neon);
   color: var(--bg-dark);
   transform: scale(1.05);
   box-shadow: 0 0 25px rgba(58, 247, 127, 0.4);
-}
-.category-btn.active {
-  background: linear-gradient(90deg, var(--neon), #62fba2);
-  color: var(--bg-dark);
-  box-shadow: 0 0 25px rgba(58, 247, 127, 0.5);
-  transform: scale(1.05);
 }
 
 /* =======================
@@ -266,10 +259,11 @@ body {
   scrollbar-color: var(--neon) rgba(255, 255, 255, 0.05);
 }
 
+/* ✅ Bigger video cards */
 .video-card {
-  flex: 0 0 clamp(220px, 70vw, 320px);
+  flex: 0 0 clamp(280px, 80vw, 420px);
   scroll-snap-align: center;
-  border-radius: 16px;
+  border-radius: 18px;
   overflow: hidden;
   background: #000;
   transition: all 0.4s ease;
@@ -280,8 +274,9 @@ body {
 }
 .video-card iframe {
   width: 100%;
-  height: clamp(160px, 45vw, 200px);
+  height: clamp(200px, 60vw, 320px); /* ⬆️ Increased height */
   border: none;
+  border-radius: inherit;
 }
 
 /* =======================
@@ -295,20 +290,20 @@ body {
 
 .media-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: clamp(16px, 3vw, 26px);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* larger grid boxes */
+  gap: clamp(20px, 3vw, 28px);
   margin-top: 40px;
 }
 
 .media-grid iframe {
   width: 100%;
-  height: clamp(180px, 45vw, 240px);
-  border-radius: 14px;
+  height: clamp(240px, 55vw, 360px); /* larger video size */
+  border-radius: 16px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .media-grid iframe:hover {
   transform: scale(1.03);
-  box-shadow: 0 0 20px var(--neon-shadow);
+  box-shadow: 0 0 25px var(--neon-shadow);
 }
 
 /* =======================
