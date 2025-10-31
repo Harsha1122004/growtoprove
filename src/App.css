@@ -274,9 +274,37 @@ body {
 }
 .video-card iframe {
   width: 100%;
-  height: clamp(200px, 60vw, 320px); /* ⬆️ Increased height */
+  height: clamp(250px, 70vw, 370px); /* ⬆️ Increased height */
   border: none;
   border-radius: inherit;
+}
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(58, 247, 127, 0.1);
+  border: 1px solid rgba(58, 247, 127, 0.4);
+  color: var(--neon);
+  font-size: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+.scroll-btn:hover {
+  background: var(--neon);
+  color: var(--bg-dark);
+  box-shadow: 0 0 30px var(--neon-shadow);
+  transform: translateY(-50%) scale(1.1);
+}
+.scroll-btn.left {
+  left: 20px;
+}
+.scroll-btn.right {
+  right: 20px;
 }
 
 /* =======================
