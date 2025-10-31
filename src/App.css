@@ -130,8 +130,8 @@ html, body {
 
 .hero-title {
   /* ✅ THIS IS THE FIX: Smaller minimum size and less aggressive scaling */
-  font-size: clamp(15px, 3.8vw, 16px);
-  font-weight: 900;
+  font-size: clamp(14px, 4vw, 17px);
+  font-weight: 450;
   line-height: 1.25; /* Slightly adjusted for better wrapping if needed */
   color: #fff;
   margin-bottom: 12px;
