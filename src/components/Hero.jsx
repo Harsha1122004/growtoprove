@@ -1,7 +1,16 @@
-import React from "react";
 import "../App.css";
 
 export default function Hero() {
+  const handleContactClick = () => {
+    // Opens Gmail compose in a new tab
+    const email = "growtoprove@gmail.com";
+    const subject = encodeURIComponent("Hello GrowToProve");
+    const body = encodeURIComponent("Hi team, I’d like to get in touch regarding...");
+    const gmailURL = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`;
+
+    window.open(gmailURL, "_blank");
+  };
+
   return (
     <>
       <nav className="topbar">
@@ -14,14 +23,6 @@ export default function Hero() {
           <a href="#motion-graphics" className="btn ghost small">
             Discover
           </a>
-          <a href="#submit" className="btn ghost small">
-            Submit
-          </a>
-        </div>
-
-        <div className="nav-actions">
-          <button className="btn ghost small">Login</button>
-          <button className="btn primary small">Register</button>
         </div>
       </nav>
 
@@ -36,15 +37,12 @@ export default function Hero() {
           </p>
 
           <div className="hero-cta">
-            <a
-              href="mailto:growtoprove@gmail.com"
+            <button
               className="btn primary large"
+              onClick={handleContactClick}
             >
               Contact Us
-            </a>
-            <a href="#submit" className="btn ghost large">
-              Submit Your Work
-            </a>
+            </button>
           </div>
         </div>
       </header>
