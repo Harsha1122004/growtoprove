@@ -306,79 +306,33 @@ body {
 }
 
 /* ---------- Scroll Buttons (outside the masking area) ---------- */
-/* invisible larger hit-area wrapper to make taps easier */
 .scroll-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: var(--scroll-btn-size);
-  height: var(--scroll-btn-size);
-  padding: 0;
-  border: 0;
-  background: transparent; /* wrapper is invisible */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 40;              /* sit above mask */
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* The visible circular button inside the wrapper */
-.scroll-btn .visual {
-  width: var(--scroll-btn-visual);
-  height: var(--scroll-btn-visual);
-  border-radius: 999px;
   background: rgba(58, 247, 127, 0.1);
   border: 1px solid rgba(58, 247, 127, 0.4);
   color: var(--neon);
-  font-size: 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  font-size: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  z-index: 10;
 }
-
-/* hover / focus states */
-.scroll-btn .visual:hover,
-.scroll-btn .visual:focus {
-  transform: scale(1.06);
+.scroll-btn:hover {
   background: var(--neon);
   color: var(--bg-dark);
-  box-shadow: 0 8px 30px var(--neon-shadow);
-  outline: none;
+  box-shadow: 0 0 30px var(--neon-shadow);
+  transform: translateY(-50%) scale(1.1);
 }
-
-/* left / right positions: placed just outside the content area */
-.scroll-btn.left  { left: calc(var(--scroll-btn-gap)); }
-.scroll-btn.right { right: calc(var(--scroll-btn-gap)); }
-
-/* smaller visual offset for very wide screens */
-@media (min-width:1600px) {
-  .scroll-btn.left { left: calc(var(--scroll-btn-gap) * 1.5); }
-  .scroll-btn.right{ right: calc(var(--scroll-btn-gap) * 1.5); }
+.scroll-btn.left {
+  left: 20px;
 }
-
-/* hide buttons on small screens (touch gestures are primary) */
-@media (max-width: 880px) {
-  .scroll-btn { display: none; }
-  /* reduce mask side padding on small screens */
-  .video-carousel-mask {
-    padding-left: clamp(16px, 5vw, 32px);
-    padding-right: clamp(16px, 5vw, 32px);
-  }
-}
-
-/* accessibility focus outline for keyboard users */
-.scroll-btn .visual:focus-visible {
-  box-shadow: 0 0 0 4px rgba(58,247,127,0.18), 0 8px 30px rgba(0,0,0,0.4);
-}
-
-/* ensure buttons don't steal pointer events from the mask when invisible */
-.video-carousel-mask,
-.video-carousel-mask * {
-  pointer-events: auto;
+.scroll-btn.right {
+  right: 20px;
 }
 
 
