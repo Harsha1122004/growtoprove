@@ -109,13 +109,13 @@ html, body {
   HERO SECTION
 ======================= */
 .hero {
-  min-height: 100vh;
-  min-height: 100dvh;
+  /* Decreased from 100dvh to 90dvh to make the section smaller */
+  min-height: 90dvh; 
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 10px 9px;
+  padding: 5px 4.5px;
   background: linear-gradient(180deg, #161b22 0%, #040404 100%);
   text-align: center;
   box-sizing: border-box;
