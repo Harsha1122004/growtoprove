@@ -135,14 +135,7 @@ html, body {
 }
 
 /* --- DESKTOP STYLES --- */
-.hero-title {
-  font-size: 42px; /* Large size for desktop */
-  font-weight: 900;
-  line-height: 1.2;
-  color: #fff;
-  margin-bottom: 15px;
-  text-shadow: 0 0 30px rgba(58, 247, 127, 0.33);
-}
+
 
 .hero-sub {
   font-size: 18px; /* Standard size for desktop subtitle */
@@ -153,12 +146,7 @@ html, body {
   font-weight: 400;
 }
 
-/* --- Accent and CTA Styles (Unchanged) --- */
-.hero-title .accent {
-  color: var(--neon);
-  text-shadow: 0 0 55px var(--neon), 0 0 8px var(--neon);
-  animation: glowPulse 2.5s infinite ease-in-out;
-}
+
 
 .hero-cta .btn.primary {
   font-size: 16px;
@@ -174,15 +162,42 @@ html, body {
 }
 
 
-/* ✅ ✅ ✅ THIS IS THE FIX ✅ ✅ ✅ */
-/* This rule applies ONLY to mobile screens. */
+/* --- HERO TITLE (Desktop Default) --- */
+.hero-title {
+  font-size: 42px; /* Large size for desktop */
+  font-weight: 900;
+  line-height: 1.2;
+  color: #fff;
+  margin-bottom: 15px;
+  text-shadow: 0 0 30px rgba(58, 247, 127, 0.33);
+  /* Default wrapping behavior for desktop */
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+/* --- Accent Styling (Visual Only) --- */
+.hero-title .accent {
+  /* This class should ONLY handle color and shadow, not layout. */
+  color: var(--neon);
+  text-shadow: 0 0 55px var(--neon), 0 0 8px var(--neon);
+  animation: glowPulse 2.5s infinite ease-in-out;
+}
+
+
+/* ✅ ✅ ✅ THIS IS THE GUARANTEED MOBILE FIX ✅ ✅ ✅ */
+/* It applies ONLY to mobile screens. */
 @media (max-width: 767px) {
   
-  /* Select BOTH the title and the subtitle */
-  .hero-title,
-  .hero-sub {
-    /* Set them to the EXACT SAME small, safe font size. */
-    font-size: 15px;
+  .hero-title {
+    /* 1. Set a smaller, safe font size for mobile. */
+    font-size: 26px;
+
+    /* 2. THIS IS THE MOST IMPORTANT RULE. */
+    /* It FORCES the text to wrap, overriding any other style. */
+    white-space: normal !important;
+
+    /* 3. Safety net to break long words if necessary. */
+    overflow-wrap: break-word;
   }
 }
 /* =======================
