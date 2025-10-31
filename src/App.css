@@ -129,10 +129,19 @@ html, body {
 }
 
 .hero-title {
-  /* This will apply to desktop */
-  font-size: clamp(14px, 4vw, 17px);
-  font-weight: 450;
-  line-height: 1.25;
+  /* ✅ THIS IS THE FIX */
+  /* 1. Use viewport width (vw) for a fluid font size */
+  font-size: 8vw; /* Adjust this value as needed */
+  
+  /* 2. Force the text to stay on a single line */
+  white-space: nowrap;
+  
+  /* 3. Prevent overflow from breaking the layout */
+  overflow: hidden;
+  
+  /* Other styles remain the same */
+  font-weight: 900; /* Increased weight for impact */
+  line-height: 1.2;
   color: #fff;
   margin-bottom: 12px;
   text-shadow: 0 0 30px rgba(58, 247, 127, 0.33);
@@ -146,8 +155,8 @@ html, body {
 }
 
 .hero-sub {
-  /* This will apply to desktop */
-  font-size: clamp(14px, 4vw, 17px);
+  /* Subtitle can have its own separate, safe styling */
+  font-size: 14px;
   line-height: 1.5;
   color: #d6efdc;
   margin: 15px auto 24px;
@@ -167,15 +176,8 @@ html, body {
   50% { text-shadow: 0 0 12px var(--neon); opacity: 0.94; }
 }
 
-/* ✅ THIS IS THE FIX FOR MOBILE VIEW */
-@media (max-width: 767px) {
-  .hero-title,
-  .hero-sub {
-    /* This overrides the clamp() function on mobile screens */
-    /* and sets a fixed size for both elements. */
-    font-size: 14px;
-  }
-}
+/* We no longer need the specific mobile media query for the title */
+/* because the vw unit handles all screen sizes automatically. */
 /* =======================
  🧭 CATEGORY NAV
 ======================= */
