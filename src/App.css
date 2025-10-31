@@ -259,7 +259,6 @@ body {
   scrollbar-color: var(--neon) rgba(255, 255, 255, 0.05);
 }
 
-/* ✅ Bigger video cards */
 .video-card {
   flex: 0 0 clamp(280px, 80vw, 420px);
   scroll-snap-align: center;
@@ -274,10 +273,11 @@ body {
 }
 .video-card iframe {
   width: 100%;
-  height: clamp(250px, 70vw, 370px); /* ⬆️ Increased height */
+  height: clamp(200px, 60vw, 320px);
   border: none;
   border-radius: inherit;
 }
+
 .scroll-btn {
   position: absolute;
   top: 50%;
@@ -306,6 +306,28 @@ body {
 .scroll-btn.right {
   right: 20px;
 }
+
+
+/* ✅ Bigger video cards */
+.video-card {
+  flex: 0 0 clamp(280px, 80vw, 420px);
+  scroll-snap-align: center;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #000;
+  transition: all 0.4s ease;
+}
+.video-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px rgba(58, 247, 127, 0.3);
+}
+.video-card iframe {
+  width: 100%;
+  height: clamp(250px, 70vw, 370px); /* ⬆️ Increased height */
+  border: none;
+  border-radius: inherit;
+}
+
 
 /* =======================
  🚀 MOTION & TYPOGRAPHY
