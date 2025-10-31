@@ -1,15 +1,19 @@
+import React, { useCallback } from "react";
 import "../App.css";
 
 export default function Hero() {
-  const handleContactClick = () => {
-    // Opens Gmail compose in a new tab
+  const handleContactClick = useCallback(() => {
     const email = "growtoprove@gmail.com";
     const subject = encodeURIComponent("Hello GrowToProve");
     const body = encodeURIComponent("Hi team, I’d like to get in touch regarding...");
     const gmailURL = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`;
+    const mailtoFallback = `mailto:${email}?subject=${subject}&body=${body}`;
 
-    window.open(gmailURL, "_blank");
-  };
+    const newWindow = window.open(gmailURL, "_blank", "noopener,noreferrer");
+    if (!newWindow || newWindow.closed || typeof newWindow.closed === "undefined") {
+      window.location.href = mailtoFallback;
+    }
+  }, []);
 
   return (
     <>
@@ -35,12 +39,8 @@ export default function Hero() {
             Showcasing reels, motion graphics, and edits — crafted to help your
             brand grow and prove its value.
           </p>
-
           <div className="hero-cta">
-            <button
-              className="btn primary large"
-              onClick={handleContactClick}
-            >
+            <button className="btn primary large" onClick={handleContactClick}>
               Contact Us
             </button>
           </div>
