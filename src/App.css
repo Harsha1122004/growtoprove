@@ -115,7 +115,7 @@ html, body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 20px 18px;
+  padding: 10px 9px;
   background: linear-gradient(180deg, #161b22 0%, #040404 100%);
   text-align: center;
   box-sizing: border-box;
@@ -129,22 +129,24 @@ html, body {
 }
 
 .hero-title {
-  /* ✅ THIS IS THE FIX: Smaller minimum size and less aggressive scaling */
+  /* Font size is now the same as the subtitle */
   font-size: clamp(14px, 4vw, 17px);
   font-weight: 450;
-  line-height: 1.25; /* Slightly adjusted for better wrapping if needed */
+  line-height: 1.25;
   color: #fff;
   margin-bottom: 12px;
   text-shadow: 0 0 30px rgba(58, 247, 127, 0.33);
 }
 
 .hero-title .accent {
+  /* The "GrowToProve" part still retains its special styling */
   color: var(--neon);
   text-shadow: 0 0 55px var(--neon), 0 0 8px var(--neon);
   animation: glowPulse 2.5s infinite ease-in-out;
 }
 
 .hero-sub {
+  /* Font size now matches the title */
   font-size: clamp(14px, 4vw, 17px);
   line-height: 1.5;
   color: #d6efdc;
@@ -152,7 +154,6 @@ html, body {
   max-width: 95%;
   font-weight: 500;
 }
-
 .hero-cta .btn.primary {
   font-size: 14px;
   font-weight: 700;
