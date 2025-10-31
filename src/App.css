@@ -1,6 +1,10 @@
 /* =======================
  🌌 BASE & GLOBAL
 ======================= */
+html {
+  font-size: clamp(14px, 1.6vw, 18px);
+}
+
 :root {
   --bg-dark: #020202;
   --bg-medium: #0c0d0c;
