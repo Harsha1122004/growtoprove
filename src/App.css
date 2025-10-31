@@ -107,6 +107,8 @@ html, body {
 
 /* =======================
   HERO SECTION (CORRECTED)
+/* =======================
+  HERO SECTION (FINAL FIX)
 ======================= */
 
 .hero {
@@ -115,7 +117,7 @@ html, body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 20px 18px; /* Restored padding for better spacing */
+  padding: 20px 18px;
   background: linear-gradient(180deg, #161b22 0%, #040404 100%);
   text-align: center;
   box-sizing: border-box;
@@ -125,38 +127,32 @@ html, body {
   width: 100%;
   max-width: 420px;
   margin: 0 auto;
-  padding: 20px 15px; /* Adjusted padding */
+  padding: 20px 15px;
 }
 
 .hero-title {
-  /* ✅ THIS IS THE FIX: A balanced clamp() for proper wrapping */
-  /* Min size: 28px (for small phones) */
-  /* Scalable size: 7vw (grows with the screen) */
-  /* Max size: 42px (for desktops) */
-  font-size: clamp(28px, 7vw, 42px);
-  
-  font-weight: 900; /* A heavier weight looks better for titles */
-  line-height: 1.2; /* Tighter line height for multi-line titles */
+  /* This is the font size for DESKTOP and larger screens */
+  font-size: clamp(32px, 7vw, 42px);
+  font-weight: 900;
+  line-height: 1.2;
   color: #fff;
   margin-bottom: 15px;
   text-shadow: 0 0 30px rgba(58, 247, 127, 0.33);
 }
 
 .hero-title .accent {
-  /* The "GrowToProve" part styling */
   color: var(--neon);
   text-shadow: 0 0 55px var(--neon), 0 0 8px var(--neon);
   animation: glowPulse 2.5s infinite ease-in-out;
 }
 
 .hero-sub {
-  /* A smaller, more readable size for the subtitle */
   font-size: clamp(15px, 4vw, 17px);
   line-height: 1.5;
   color: #d6efdc;
   margin: 15px auto 24px;
   max-width: 95%;
-  font-weight: 400; /* Lighter weight for contrast */
+  font-weight: 400;
 }
 
 .hero-cta .btn.primary {
@@ -172,8 +168,15 @@ html, body {
   50% { text-shadow: 0 0 12px var(--neon); opacity: 0.94; }
 }
 
-/* No mobile-specific media query is needed for font-size */
-/* because clamp() handles all screen sizes effectively. */
+
+/* ✅ THIS IS THE GUARANTEED FIX FOR MOBILE */
+/* It targets small screens and forces a smaller font size */
+@media (max-width: 767px) {
+  .hero-title {
+    /* A smaller, fixed size that will not overflow on mobile. */
+    font-size: 28px; 
+  }
+}
 /* =======================
  🧭 CATEGORY NAV
 ======================= */
