@@ -106,16 +106,16 @@ html, body {
 }
 
 /* =======================
-  HERO SECTION
+  HERO SECTION (CORRECTED)
 ======================= */
+
 .hero {
-  /* Decreased from 100dvh to 90dvh to make the section smaller */
   min-height: 90dvh; 
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 5px 4.5px;
+  padding: 20px 18px; /* Restored padding for better spacing */
   background: linear-gradient(180deg, #161b22 0%, #040404 100%);
   text-align: center;
   box-sizing: border-box;
@@ -125,48 +125,44 @@ html, body {
   width: 100%;
   max-width: 420px;
   margin: 0 auto;
-  padding: 26px 15px;
+  padding: 20px 15px; /* Adjusted padding */
 }
 
 .hero-title {
-  /* ✅ THIS IS THE FIX */
-  /* 1. Use viewport width (vw) for a fluid font size */
-  font-size: 8vw; /* Adjust this value as needed */
+  /* ✅ THIS IS THE FIX: A balanced clamp() for proper wrapping */
+  /* Min size: 28px (for small phones) */
+  /* Scalable size: 7vw (grows with the screen) */
+  /* Max size: 42px (for desktops) */
+  font-size: clamp(28px, 7vw, 42px);
   
-  /* 2. Force the text to stay on a single line */
-  white-space: nowrap;
-  
-  /* 3. Prevent overflow from breaking the layout */
-  overflow: hidden;
-  
-  /* Other styles remain the same */
-  font-weight: 900; /* Increased weight for impact */
-  line-height: 1.2;
+  font-weight: 900; /* A heavier weight looks better for titles */
+  line-height: 1.2; /* Tighter line height for multi-line titles */
   color: #fff;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
   text-shadow: 0 0 30px rgba(58, 247, 127, 0.33);
 }
 
 .hero-title .accent {
-  /* The "GrowToProve" part still retains its special styling */
+  /* The "GrowToProve" part styling */
   color: var(--neon);
   text-shadow: 0 0 55px var(--neon), 0 0 8px var(--neon);
   animation: glowPulse 2.5s infinite ease-in-out;
 }
 
 .hero-sub {
-  /* Subtitle can have its own separate, safe styling */
-  font-size: 14px;
+  /* A smaller, more readable size for the subtitle */
+  font-size: clamp(15px, 4vw, 17px);
   line-height: 1.5;
   color: #d6efdc;
   margin: 15px auto 24px;
   max-width: 95%;
-  font-weight: 500;
+  font-weight: 400; /* Lighter weight for contrast */
 }
+
 .hero-cta .btn.primary {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
-  padding: 12px 28px;
+  padding: 12px 30px;
   width: 90%;
   max-width: 280px;
 }
@@ -176,8 +172,8 @@ html, body {
   50% { text-shadow: 0 0 12px var(--neon); opacity: 0.94; }
 }
 
-/* We no longer need the specific mobile media query for the title */
-/* because the vw unit handles all screen sizes automatically. */
+/* No mobile-specific media query is needed for font-size */
+/* because clamp() handles all screen sizes effectively. */
 /* =======================
  🧭 CATEGORY NAV
 ======================= */
