@@ -111,8 +111,12 @@ html, body {
   HERO SECTION (FINAL FIX)
 ======================= */
 
+/* =================================
+  HERO SECTION (SIMPLIFIED FINAL FIX)
+================================= */
+
 .hero {
-  min-height: 90dvh; 
+  min-height: 90dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,9 +134,9 @@ html, body {
   padding: 20px 15px;
 }
 
+/* --- DESKTOP STYLES --- */
 .hero-title {
-  /* This is the font size for DESKTOP and larger screens */
-  font-size: clamp(32px, 7vw, 42px);
+  font-size: 42px; /* Large size for desktop */
   font-weight: 900;
   line-height: 1.2;
   color: #fff;
@@ -140,19 +144,20 @@ html, body {
   text-shadow: 0 0 30px rgba(58, 247, 127, 0.33);
 }
 
-.hero-title .accent {
-  color: var(--neon);
-  text-shadow: 0 0 55px var(--neon), 0 0 8px var(--neon);
-  animation: glowPulse 2.5s infinite ease-in-out;
-}
-
 .hero-sub {
-  font-size: clamp(15px, 4vw, 17px);
+  font-size: 18px; /* Standard size for desktop subtitle */
   line-height: 1.5;
   color: #d6efdc;
   margin: 15px auto 24px;
   max-width: 95%;
   font-weight: 400;
+}
+
+/* --- Accent and CTA Styles (Unchanged) --- */
+.hero-title .accent {
+  color: var(--neon);
+  text-shadow: 0 0 55px var(--neon), 0 0 8px var(--neon);
+  animation: glowPulse 2.5s infinite ease-in-out;
 }
 
 .hero-cta .btn.primary {
@@ -169,12 +174,15 @@ html, body {
 }
 
 
-/* ✅ THIS IS THE GUARANTEED FIX FOR MOBILE */
-/* It targets small screens and forces a smaller font size */
+/* ✅ ✅ ✅ THIS IS THE FIX ✅ ✅ ✅ */
+/* This rule applies ONLY to mobile screens. */
 @media (max-width: 767px) {
-  .hero-title {
-    /* A smaller, fixed size that will not overflow on mobile. */
-    font-size: 28px; 
+  
+  /* Select BOTH the title and the subtitle */
+  .hero-title,
+  .hero-sub {
+    /* Set them to the EXACT SAME small, safe font size. */
+    font-size: 15px;
   }
 }
 /* =======================
