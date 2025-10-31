@@ -17,6 +17,11 @@
   padding: 0;
 }
 
+@media (max-width: 767px) {
+  .hero-title {
+    display: none; /* This line completely hides the title on mobile */
+  }
+}
 html, body {
   width: 100%;
   overflow-x: hidden;
