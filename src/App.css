@@ -301,7 +301,7 @@ body {
 }
 .video-card iframe {
   width: 100%;
-  height: clamp(250px, 70vw, 370px);
+  height: clamp(200px, 60vw, 320px);
   border: none;
   border-radius: inherit;
 }
