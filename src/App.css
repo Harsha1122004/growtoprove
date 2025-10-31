@@ -108,8 +108,12 @@ html, body {
 /* =======================
   HERO SECTION
 ======================= */
+/* --- HERO SECTION --- */
 .hero {
+  /* Fallback for older browsers */
   min-height: 100vh;
+  /* Correct unit for modern mobile browsers that accounts for the address bar */
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
