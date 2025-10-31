@@ -418,3 +418,157 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ============================
+ 📱 MOBILE OPTIMIZATION
+============================ */
+@media (max-width: 768px) {
+  /* General reset for better proportions */
+  html, body {
+    font-size: 16px;
+    overflow-x: hidden;
+  }
+
+  /* --- NAVBAR --- */
+  .topbar {
+    padding: 12px 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .brand {
+    font-size: 1.2rem;
+    gap: 8px;
+  }
+  .logo {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+  }
+
+  /* --- HERO SECTION --- */
+  .hero {
+    min-height: 85vh;
+    padding: 80px 5%;
+  }
+  .hero-inner {
+    padding: 10px;
+  }
+  .hero-title {
+    font-size: clamp(36px, 8vw, 48px);
+    line-height: 1.2;
+  }
+  .hero-sub {
+    font-size: 17px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  .hero-cta {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .btn.primary, .btn.ghost {
+    font-size: 15px;
+    padding: 12px 26px;
+    width: 80%;
+    justify-content: center;
+  }
+
+  /* --- CATEGORY NAV --- */
+  .category-nav {
+    padding: 20px 0;
+  }
+  .category-buttons {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 18px;
+  }
+  .category-btn {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  /* --- FEATURED REELS --- */
+  .video-carousel-container {
+    padding: 60px 0;
+  }
+
+  .video-carousel-mask {
+    padding: 0 20px;
+    gap: 18px;
+  }
+
+  .video-card {
+    flex: 0 0 90%;
+    border-radius: 16px;
+  }
+
+  .video-card iframe {
+    height: clamp(280px, 60vw, 360px);
+  }
+
+  /* Hide scroll buttons on mobile */
+  .scroll-btn {
+    display: none !important;
+  }
+
+  /* --- SECTION TITLES --- */
+  .section-title {
+    font-size: 30px;
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 0 5%;
+  }
+
+  /* --- MEDIA GRIDS --- */
+  .media-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .media-grid iframe {
+    height: 280px;
+  }
+
+  /* --- CLIENT SECTION --- */
+  .clients-section {
+    padding: 70px 10px;
+  }
+  .client-stats {
+    flex-direction: column;
+    gap: 25px;
+  }
+  .stat-card {
+    width: 85%;
+    padding: 30px 20px;
+    border-radius: 16px;
+  }
+  .stat-num {
+    font-size: 42px;
+  }
+  .stat-label {
+    font-size: 16px;
+  }
+}
+
+/* ✅ Ultra-small screens (like 360px width) */
+@media (max-width: 420px) {
+  .hero-title {
+    font-size: 32px;
+  }
+  .hero-sub {
+    font-size: 15px;
+  }
+  .btn.primary, .btn.ghost {
+    width: 100%;
+  }
+  .video-card iframe {
+    height: 320px;
+  }
+  .stat-card {
+    width: 100%;
+  }
+}
+
