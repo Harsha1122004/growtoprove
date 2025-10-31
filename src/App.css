@@ -420,251 +420,170 @@ body {
   transform: translateY(0);
 }
 /* =======================
-📱 ULTRA-OPTIMIZED RESPONSIVE MOBILE DESIGN
+📱 ULTRA-RESPONSIVE MOBILE DESIGN (FIXED)
 ======================= */
 @media (max-width: 768px) {
   html, body {
-    font-size: 14px;
+    font-size: 15px;
     overflow-x: hidden;
     background: radial-gradient(circle at top, #000, #020202);
   }
 
   /* --- TOPBAR --- */
   .topbar {
-    padding: 10px 14px;
+    padding: 10px 16px;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.55);
     backdrop-filter: blur(10px);
   }
 
-  .brand {
-    font-size: 1rem;
-  }
-
   .logo {
-    width: 28px;
-    height: 28px;
-    font-size: 14px;
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
   }
 
   .btn.small {
-    font-size: 12px;
-    padding: 6px 12px;
+    font-size: 13px;
+    padding: 6px 14px;
   }
 
   /* --- HERO SECTION --- */
   .hero {
-    min-height: 52vh; /* ✅ compact hero height */
-    padding: 36px 20px 28px;
+    min-height: calc(100dvh - 80px); /* ✅ full dynamic viewport height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px 20px;
     background: linear-gradient(180deg, var(--bg-dark), #000);
+    text-align: center;
+  }
+
+  .hero-inner {
+    width: 100%;
+    max-width: 500px;
   }
 
   .hero-title {
-    font-size: clamp(22px, 5.5vw, 30px);
-    line-height: 1.2;
+    font-size: clamp(22px, 6vw, 28px);
+    line-height: 1.25;
+    margin-bottom: 12px;
     text-shadow: 0 0 20px rgba(58, 247, 127, 0.25);
   }
 
   .hero-sub {
-    font-size: 13px;
-    line-height: 1.4;
-    margin: 10px auto 18px;
-    max-width: 90%;
+    font-size: 14px; /* ✅ readable size */
+    line-height: 1.5;
+    margin: 8px auto 22px;
     color: #cfcfcf;
   }
 
   .hero-cta {
-    gap: 8px;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
   }
 
-  .btn.primary,
-  .btn.ghost {
-    font-size: 12.5px;
-    padding: 8px 20px;
+  .btn.primary {
+    font-size: 14px;
+    padding: 10px 26px;
     width: 70%;
     border-radius: 999px;
   }
 
-  /* --- CATEGORY NAV --- */
-  .category-nav {
-    padding: 10px 0 24px;
-  }
-
-  .category-container {
-    padding: 8px 12px;
-    border-radius: 12px;
-  }
-
-  .category-btn {
-    padding: 6px 10px;
-    font-size: 12px;
-  }
-
-  /* --- FEATURED REELS --- */
+  /* --- REELS --- */
   .video-carousel-container {
-    padding: 35px 0;
-  }
-
-  .section-title {
-    font-size: 20px;
-    margin-bottom: 4px;
-  }
-
-  .section-sub {
-    font-size: 12px;
-    margin-bottom: 10px;
-  }
-
-  .video-carousel-mask {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    gap: 12px;
-    padding: 0 40px;
-    scroll-snap-type: x mandatory;
+    padding: 40px 0;
   }
 
   .video-card {
-    flex: 0 0 88%;
-    border-radius: 10px;
+    flex: 0 0 90%;
+    border-radius: 12px;
   }
 
   .video-card iframe {
-    height: 220px; /* ✅ smaller but proportionate */
+    height: 240px;
     border-radius: inherit;
   }
 
-  /* --- Scroll Buttons --- */
+  /* Scroll Buttons */
   .scroll-btn {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 50;
-    width: 38px;
-    height: 38px;
-    background: rgba(58, 247, 127, 0.12);
-    border: 1px solid rgba(58, 247, 127, 0.3);
+    top: 45%;
+    width: 36px;
+    height: 36px;
+    background: rgba(58, 247, 127, 0.15);
+    border: 1px solid rgba(58, 247, 127, 0.35);
     color: var(--neon);
     border-radius: 50%;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
     backdrop-filter: blur(8px);
-    font-size: 16px;
     transition: all 0.25s ease;
   }
-
   .scroll-btn.left { left: 8px; }
   .scroll-btn.right { right: 8px; }
 
   .scroll-btn:hover {
     background: var(--neon);
     color: var(--bg-dark);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 0 15px var(--neon-shadow);
+    transform: translateY(-50%) scale(1.05);
   }
 
-  /* --- MOTION & TYPOGRAPHY --- */
-  .motion-grid-section {
-    padding: 40px 0;
-  }
-
-  .media-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-    padding: 0 16px;
-  }
-
-  .media-grid iframe {
-    height: 210px;
-    border-radius: 10px;
-  }
-
-  /* --- CLIENTS SECTION --- */
+  /* --- CLIENTS --- */
   .clients-section {
-    padding: 40px 15px;
+    padding: 50px 15px;
   }
-
   .client-stats {
     flex-direction: column;
-    gap: 14px;
+    gap: 18px;
   }
-
   .stat-card {
-    width: 88%;
-    padding: 22px;
-    border-radius: 12px;
+    width: 90%;
+    padding: 26px;
+    border-radius: 14px;
   }
-
   .stat-num {
-    font-size: 28px;
+    font-size: 30px;
   }
-
   .stat-label {
-    font-size: 13px;
+    font-size: 14px;
   }
 }
 
-/* Ultra-small devices (<=420px) */
+/* ✅ Ultra-small phones */
 @media (max-width: 420px) {
   .hero {
-    min-height: 48vh;
-    padding: 28px 12px;
+    min-height: calc(100dvh - 70px);
+    padding: 28px 16px;
   }
 
   .hero-title {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .hero-sub {
-    font-size: 12px;
-  }
-
-  .btn.primary,
-  .btn.ghost {
-    width: 85%;
-    font-size: 12px;
-  }
-
-  .video-card iframe {
-    height: 200px;
-  }
-
-  .scroll-btn {
-    width: 32px;
-    height: 32px;
     font-size: 13px;
   }
 
-  .scroll-btn.left { left: 6px; }
-  .scroll-btn.right { right: 6px; }
-
-  .section-title {
-    font-size: 18px;
+  .btn.primary {
+    width: 85%;
+    font-size: 13px;
   }
 
-  .section-sub {
-    font-size: 11.5px;
+  .video-card iframe {
+    height: 210px;
   }
 
-  .media-grid iframe {
-    height: 190px;
-  }
-
-  .stat-card {
-    padding: 20px;
-  }
-
-  .stat-num {
-    font-size: 24px;
-  }
-
-  .stat-label {
+  .scroll-btn {
+    width: 30px;
+    height: 30px;
     font-size: 12px;
   }
 }
