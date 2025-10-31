@@ -470,17 +470,17 @@ body {
     padding: 6px 14px;
   }
 
- /* --- HERO SECTION (Final Polished) --- */
 /* --- HERO SECTION (Modern + Distinct) --- */
 .hero {
-  min-height: 88vh; /* Slightly taller for impact */
+  min-height: 100vh; /* Use 100vh to fill the viewport */
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 45px 18px 40px;
-  background: linear-gradient(180deg, #161b22 0%, #040404 100%); /* deeper black gradient */
+  padding: 20px 18px; /* Reduced padding to create more space */
+  background: linear-gradient(180deg, #161b22 0%, #040404 100%);
   text-align: center;
+  box-sizing: border-box; /* Ensures padding is included in the element's total height */
 }
 
 /* Centralized Inner Content */
@@ -488,7 +488,7 @@ body {
   width: 100%;
   max-width: 420px;
   margin: 0 auto;
-  background: rgba(0,0,0,0.62); /* softer contrast background */
+  background: rgba(0,0,0,0.62);
   border-radius: 18px;
   box-shadow: 0 6px 44px 0 rgba(58,247,127,0.13);
   padding: 42px 20px;
@@ -496,7 +496,7 @@ body {
 
 /* Title Styling */
 .hero-title {
-  font-size: clamp(26px, 7vw, 38px); /* Bigger for hero impact */
+  font-size: clamp(26px, 7vw, 38px);
   font-weight: 900;
   line-height: 1.1;
   color: #fff;
@@ -507,7 +507,7 @@ body {
 
 /* Accent Highlight with Glow */
 .hero-title .accent {
-  color: #3af77f; /* vivid neon */
+  color: #3af77f;
   text-shadow: 0 0 55px #3af77f, 0 0 8px #2afa6a;
   font-weight: 900;
   animation: glowPulse 2.5s infinite ease-in-out;
@@ -560,15 +560,15 @@ body {
 /* --- Mobile Ultra-Small Devices (≤420px) --- */
 @media (max-width: 420px) {
   .hero {
-    min-height: 78vh;
-    padding: 25px 10px 30px;
+    /* min-height is inherited from the base .hero style */
+    padding: 20px 10px; /* Further reduced padding for small screens */
   }
   .hero-inner {
-    padding: 26px 6px;
+    padding: 26px 15px; /* Adjusted padding for better spacing */
     border-radius: 13px;
   }
   .hero-title {
-    font-size: clamp(18px, 6vw, 26px);
+    font-size: clamp(22px, 6vw, 28px); /* Slightly adjusted for balance */
     line-height: 1.21;
   }
   .hero-sub {
