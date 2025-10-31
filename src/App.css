@@ -450,50 +450,90 @@ body {
     padding: 6px 14px;
   }
 
-  /* --- HERO SECTION --- */
-  .hero {
-    min-height: calc(100dvh - 80px); /* ✅ full dynamic viewport height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 40px 20px;
-    background: linear-gradient(180deg, var(--bg-dark), #000);
-    text-align: center;
-  }
+ /* --- HERO SECTION (Final Polished) --- */
+.hero {
+  min-height: calc(100dvh - 80px); /* dynamic viewport fix */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 40px 20px 50px;
+  background: linear-gradient(180deg, var(--bg-dark), #000);
+  text-align: center;
+}
 
-  .hero-inner {
-    width: 80%;
-    max-width: 100px;
+.hero-inner {
+  width: 100%;
+  max-width: 480px; /* ✅ keeps text centered and readable */
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: clamp(24px, 6vw, 32px); /* ✅ balanced sizing */
+  font-weight: 800;
+  line-height: 1.2;
+  color: #fff;
+  margin-bottom: 12px;
+  text-shadow: 0 0 25px rgba(58, 247, 127, 0.25);
+}
+
+.hero-title .accent {
+  color: var(--neon);
+  text-shadow: 0 0 40px var(--neon-shadow);
+}
+
+.hero-sub {
+  font-size: clamp(14px, 3.5vw, 16px);
+  line-height: 1.5;
+  color: #cfcfcf;
+  margin: 10px auto 24px;
+  max-width: 90%;
+}
+
+.hero-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn.primary {
+  font-size: 14px;
+  padding: 10px 26px;
+  width: 75%;
+  border-radius: 999px;
+  box-shadow: 0 0 18px rgba(58, 247, 127, 0.3);
+}
+
+.btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(58, 247, 127, 0.5);
+}
+
+/* ✅ Ultra-small devices (≤420px) */
+@media (max-width: 420px) {
+  .hero {
+    min-height: calc(100dvh - 70px);
+    padding: 30px 16px 40px;
   }
 
   .hero-title {
-    font-size: clamp(17px, 4vw, 20px);
+    font-size: clamp(20px, 5.5vw, 26px);
     line-height: 1.25;
-    margin-bottom: 10px;
-    text-shadow: 0 0 20px rgba(58, 247, 127, 0.25);
   }
 
   .hero-sub {
-    font-size: 14px; /* ✅ readable size */
-    line-height: 1.5;
-    margin: 8px auto 22px;
-    color: #cfcfcf;
-  }
-
-  .hero-cta {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+    font-size: 13.5px;
+    line-height: 1.45;
+    max-width: 95%;
   }
 
   .btn.primary {
-    font-size: 14px;
-    padding: 10px 26px;
-    width: 70%;
-    border-radius: 999px;
+    font-size: 13px;
+    padding: 9px 22px;
+    width: 85%;
   }
+}
 
   /* --- REELS --- */
   .video-carousel-container {
