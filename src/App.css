@@ -463,14 +463,14 @@ body {
   }
 
   .hero-inner {
-    width: 100%;
-    max-width: 300px;
+    width: 80%;
+    max-width: 100px;
   }
 
   .hero-title {
     font-size: clamp(17px, 4vw, 20px);
     line-height: 1.25;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     text-shadow: 0 0 20px rgba(58, 247, 127, 0.25);
   }
 
