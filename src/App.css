@@ -240,25 +240,56 @@ body {
 /* =======================
  🎞️ FEATURED REELS
 ======================= */
+/* ---------- Carousel container: give room for buttons ---------- */
+/* adjust the horizontal padding so the first/last cards aren't covered by buttons */
 .video-carousel-container {
   position: relative;
   padding: clamp(60px, 10vw, 100px) 0;
   background: radial-gradient(circle at 50% 0%, #0a0a0a, #000);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: visible; /* allow buttons to sit outside */
 }
 
+/* space reserved to the left/right to avoid cards being covered by buttons */
+:root {
+  --scroll-btn-gap: 24px;   /* visual gap from edge */
+  --scroll-btn-size: 56px;  /* total clickable hit area */
+  --scroll-btn-visual: 50px; /* visible circle size */
+}
+
+/* make mask respect button gaps */
 .video-carousel-mask {
   display: flex;
   overflow-x: auto;
+  overflow-y: hidden;
   gap: clamp(16px, 3vw, 26px);
   scroll-behavior: smooth;
-  padding: 0 clamp(20px, 5vw, 60px);
+  /* add safe padding so first/last card not hidden under buttons */
+  padding-left: calc(var(--scroll-btn-size) + var(--scroll-btn-gap));
+  padding-right: calc(var(--scroll-btn-size) + var(--scroll-btn-gap));
+  padding-top: 0;
+  padding-bottom: 0;
   scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  overscroll-behavior-x: contain;
   scrollbar-width: thin;
   scrollbar-color: var(--neon) rgba(255, 255, 255, 0.05);
 }
 
+/* scrollbar visuals */
+.video-carousel-mask::-webkit-scrollbar { height: 8px; }
+.video-carousel-mask::-webkit-scrollbar-thumb {
+  background: var(--neon);
+  border-radius: 999px;
+  box-shadow: 0 0 15px var(--neon-shadow);
+}
+.video-carousel-mask::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ---------- Video card sizing (keeps larger cinematic cards) ---------- */
 .video-card {
   flex: 0 0 clamp(280px, 80vw, 420px);
   scroll-snap-align: center;
@@ -267,65 +298,87 @@ body {
   background: #000;
   transition: all 0.4s ease;
 }
-.video-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 35px rgba(58, 247, 127, 0.3);
-}
 .video-card iframe {
   width: 100%;
-  height: clamp(200px, 60vw, 320px);
+  height: clamp(250px, 70vw, 370px);
   border: none;
   border-radius: inherit;
 }
 
+/* ---------- Scroll Buttons (outside the masking area) ---------- */
+/* invisible larger hit-area wrapper to make taps easier */
 .scroll-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  width: var(--scroll-btn-size);
+  height: var(--scroll-btn-size);
+  padding: 0;
+  border: 0;
+  background: transparent; /* wrapper is invisible */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;              /* sit above mask */
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The visible circular button inside the wrapper */
+.scroll-btn .visual {
+  width: var(--scroll-btn-visual);
+  height: var(--scroll-btn-visual);
+  border-radius: 999px;
   background: rgba(58, 247, 127, 0.1);
   border: 1px solid rgba(58, 247, 127, 0.4);
   color: var(--neon);
-  font-size: 30px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  z-index: 10;
+  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
 }
-.scroll-btn:hover {
+
+/* hover / focus states */
+.scroll-btn .visual:hover,
+.scroll-btn .visual:focus {
+  transform: scale(1.06);
   background: var(--neon);
   color: var(--bg-dark);
-  box-shadow: 0 0 30px var(--neon-shadow);
-  transform: translateY(-50%) scale(1.1);
-}
-.scroll-btn.left {
-  left: 20px;
-}
-.scroll-btn.right {
-  right: 20px;
+  box-shadow: 0 8px 30px var(--neon-shadow);
+  outline: none;
 }
 
+/* left / right positions: placed just outside the content area */
+.scroll-btn.left  { left: calc(var(--scroll-btn-gap)); }
+.scroll-btn.right { right: calc(var(--scroll-btn-gap)); }
 
-/* ✅ Bigger video cards */
-.video-card {
-  flex: 0 0 clamp(280px, 80vw, 420px);
-  scroll-snap-align: center;
-  border-radius: 18px;
-  overflow: hidden;
-  background: #000;
-  transition: all 0.4s ease;
+/* smaller visual offset for very wide screens */
+@media (min-width:1600px) {
+  .scroll-btn.left { left: calc(var(--scroll-btn-gap) * 1.5); }
+  .scroll-btn.right{ right: calc(var(--scroll-btn-gap) * 1.5); }
 }
-.video-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 35px rgba(58, 247, 127, 0.3);
+
+/* hide buttons on small screens (touch gestures are primary) */
+@media (max-width: 880px) {
+  .scroll-btn { display: none; }
+  /* reduce mask side padding on small screens */
+  .video-carousel-mask {
+    padding-left: clamp(16px, 5vw, 32px);
+    padding-right: clamp(16px, 5vw, 32px);
+  }
 }
-.video-card iframe {
-  width: 100%;
-  height: clamp(250px, 70vw, 370px); /* ⬆️ Increased height */
-  border: none;
-  border-radius: inherit;
+
+/* accessibility focus outline for keyboard users */
+.scroll-btn .visual:focus-visible {
+  box-shadow: 0 0 0 4px rgba(58,247,127,0.18), 0 8px 30px rgba(0,0,0,0.4);
+}
+
+/* ensure buttons don't steal pointer events from the mask when invisible */
+.video-carousel-mask,
+.video-carousel-mask * {
+  pointer-events: auto;
 }
 
 
