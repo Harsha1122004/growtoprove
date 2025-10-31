@@ -1,15 +1,21 @@
 /* =======================
-    🌌 BASE & GLOBAL
+ 🌌 BASE & GLOBAL
 ======================= */
 :root {
   --bg-dark: #020202;
   --bg-medium: #0c0d0c;
   --neon: #3af77f;
   --neon-shadow: rgba(58, 247, 127, 0.4);
-  --muted: #9aa19a;
-  --glass: rgba(255, 255, 255, 0.05);
+  --muted: #a5aba5;
+  --glass: rgba(255, 255, 255, 0.06);
   --text-light: #eaf7ee;
 }
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: clamp(28px, 7vw, 48px);
+  }
+}
+
 
 * {
   box-sizing: border-box;
@@ -17,106 +23,105 @@
   padding: 0;
 }
 
-html,
-body,
-#root {
-  height: 100%;
-}
-
 body {
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  /* Use a dark, subtle gradient for the overall body */
-  background: linear-gradient(180deg, var(--bg-dark) 0%, #000 100%);
+  font-family: "Poppins", "Inter", sans-serif;
+  background: radial-gradient(circle at top, var(--bg-dark), #000);
   color: var(--text-light);
   overflow-x: hidden;
 }
 
 /* =======================
-    🌠 TOPBAR
+ ⚡ TOPBAR
 ======================= */
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 36px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 40;
+  padding: 16px 40px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  animation: fadeSlideDown 0.6s ease;
+}
+
+@keyframes fadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-weight: 700;
   color: var(--neon);
+  font-weight: 700;
+  font-size: 1.3rem;
 }
 
 .logo {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   background: var(--neon);
   color: var(--bg-dark);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
+  font-size: 18px;
+  box-shadow: 0 0 20px var(--neon-shadow);
 }
 
 /* =======================
-    🎛 BUTTONS
+ 🎛 BUTTONS
 ======================= */
 .btn {
-  padding: 10px 18px;
+  padding: 10px 20px;
   border-radius: 999px;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
+  border: none;
   font-weight: 600;
+  cursor: pointer;
   transition: all 0.3s ease;
-  text-decoration: none; /* Important for <a> tags */
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
 .btn.primary {
-  background: linear-gradient(90deg, var(--neon), #49f78f);
+  background: linear-gradient(90deg, var(--neon), #62fba2);
   color: var(--bg-dark);
-  box-shadow: 0 0 20px rgba(58, 247, 127, 0.3);
+  box-shadow: 0 0 20px var(--neon-shadow);
 }
 
 .btn.primary:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 35px rgba(58, 247, 127, 0.6);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0 35px rgba(58, 247, 127, 0.7);
 }
 
 .btn.ghost {
   border: 2px solid rgba(255, 255, 255, 0.2);
   color: var(--text-light);
+  background: transparent;
 }
 
 .btn.ghost:hover {
   color: var(--neon);
   border-color: var(--neon);
-  background: rgba(58, 247, 127, 0.1);
+  box-shadow: 0 0 15px var(--neon-shadow);
 }
-
-/* === Large Buttons for Hero === */
-.btn.large {
-  padding: 14px 26px;
-  font-size: 17px;
-  font-weight: 700;
-}
-
 
 /* =======================
-    🚀 HERO SECTION (Dynamic Background)
+ 🚀 HERO SECTION
 ======================= */
 .hero {
   position: relative;
@@ -126,256 +131,328 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
+  background: linear-gradient(180deg, var(--bg-dark), #000);
   overflow: hidden;
-  background: var(--bg-dark); /* Fallback */
 }
 
-/* Dynamic Moving Background Effect */
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  /* Use a subtle, abstract image/video placeholder */
   background: url("https://i.imgur.com/Wq1wA7e.jpeg") center/cover no-repeat;
-  opacity: 0.2;
-  filter: blur(8px) brightness(0.4);
-  animation: moveBg 22s linear infinite alternate;
-  z-index: 0;
+  filter: blur(10px) brightness(0.35);
+  transform: scale(1.1);
+  animation: subtleDrift 22s ease-in-out infinite alternate;
+  opacity: 0.25;
 }
 
-@keyframes moveBg {
-  0% {
+@keyframes subtleDrift {
+  from {
     transform: scale(1);
   }
-  100% {
+  to {
     transform: scale(1.1) translateY(-20px);
   }
 }
 
-/* Gradient Overlay for Readability */
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.7), #000);
-  z-index: 1;
-}
-
 .hero-inner {
   z-index: 2;
-  max-width: 1000px;
+  max-width: 900px;
   padding: 20px;
-  animation: fadeIn 1.2s ease-in-out;
+  animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-title {
-  font-size: 78px;
+  font-size: clamp(48px, 6vw, 82px);
   font-weight: 800;
   color: #fff;
-  text-shadow: 0 0 25px var(--neon-shadow);
+  text-shadow: 0 0 25px rgba(58, 247, 127, 0.3);
 }
 
 .hero-title .accent {
   color: var(--neon);
-  text-shadow: 0 0 30px rgba(58, 247, 127, 0.6), 0 0 60px rgba(58, 247, 127, 0.4);
+  text-shadow: 0 0 40px var(--neon-shadow);
 }
 
 .hero-sub {
+  color: var(--muted);
   font-size: 20px;
-  color: #b3b3b3;
-  max-width: 800px;
+  max-width: 700px;
   margin: 20px auto 40px;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .hero-cta {
   display: flex;
-  gap: 20px;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
 }
-
 /* =======================
-    🧭 CATEGORY NAV (Moved to be inline with Hero end)
+ 🧭 CATEGORY NAV - Neon Floating Glass
 ======================= */
 .category-nav {
-  position: relative;
-  z-index: 2; /* Same as hero content */
-  margin-top: -60px; /* Pull up over the hero bottom fade */
-  padding: 0 20px 40px;
+  position: sticky;
+  top: 70px;
+  z-index: 90;
+  display: flex;
+  justify-content: center;
+  margin-top: -60px;
+  padding: 30px 0 50px;
+}
+
+.category-container {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(58, 247, 127, 0.15);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 25px rgba(58, 247, 127, 0.05);
+  padding: 18px 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  animation: fadeInUp 0.8s ease;
 }
 
 .category-buttons {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   gap: 18px;
-  max-width: fit-content;
-  margin: 0 auto;
-  
-  /* Glass/Neon Styling */
-  background: var(--glass);
-  border-radius: 14px;
-  padding: 18px 20px;
-  border: 1px solid rgba(58, 247, 127, 0.15);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 0 40px rgba(58, 247, 127, 0.08);
+  justify-content: center;
 }
 
 .category-btn {
-  background: rgba(58, 247, 127, 0.08);
-  border: 1px solid rgba(58, 247, 127, 0.25);
+  position: relative;
+  background: rgba(58, 247, 127, 0.1);
+  border: 1px solid rgba(58, 247, 127, 0.2);
   color: var(--neon);
   font-weight: 600;
   font-size: 16px;
-  padding: 10px 18px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.25s ease-in-out;
-  text-decoration: none; /* As they are now <a> tags */
+  padding: 10px 20px;
+  border-radius: 14px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
-.category-btn:hover {
-  background: var(--neon);
-  color: var(--bg-dark);
-  box-shadow: 0 0 25px rgba(58, 247, 127, 0.35);
-  transform: translateY(-3px);
+/* Neon glow hover */
+.category-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(58, 247, 127, 0.25), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.6s ease;
+  transform: scaleX(0);
+  border-radius: inherit;
 }
+.category-btn:hover::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* Active neon effect */
+.category-btn.active {
+  background: linear-gradient(90deg, var(--neon), #62fba2);
+  color: var(--bg-dark);
+  box-shadow: 0 0 25px rgba(58, 247, 127, 0.5);
+  border: none;
+  transform: scale(1.05);
+}
+
+/* Hover bounce animation */
+.category-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 0 20px rgba(58, 247, 127, 0.3);
+}
+
+/* Subtle glowing underline */
+.category-btn span {
+  position: relative;
+  z-index: 2;
+}
+.category-btn span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: var(--neon);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+.category-btn:hover span::after,
+.category-btn.active span::after {
+  width: 100%;
+}
+
+/* Responsive layout */
+@media (max-width: 900px) {
+  .category-container {
+    flex-wrap: wrap;
+    padding: 14px 18px;
+  }
+  .category-btn {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+}
+
 
 /* =======================
-    🎞️ REELS & MEDIA SECTIONS
+ 🎞️ FEATURED REELS (with buttons)
 ======================= */
-.video-sections {
-  padding-top: 60px;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.section-title {
-  font-size: 36px;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 8px;
-}
-
-.section-sub {
-  color: var(--muted);
-  font-size: 16px;
-}
-
-/* --- 🔥 Featured Reels (Clean Carousel Strip) --- */
 .video-carousel-container {
-  width: 100%;
   position: relative;
-  margin: 0 auto 80px;
-  /* Visual container strip */
-  background: var(--bg-medium); 
-  padding: 40px 0;
+  padding: 80px 0 100px;
+  background: radial-gradient(circle at 50% 0%, #0a0a0a, #000);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
 }
 
 .video-carousel-mask {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  /* Mask gradient to fade reels at edges */
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 5%,
-    black 95%,
-    transparent 100%
-  );
-}
-
-.video-carousel-track {
   display: flex;
-  gap: 24px;
-  padding: 0 40px; /* Initial offset for masked edges */
-  animation: scroll-reels 22s linear infinite;
-  white-space: nowrap; /* Prevent wrapping */
-  width: fit-content;
+  overflow-x: auto;
+  gap: 26px;
+  scroll-behavior: smooth;
+  padding: 0 60px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--neon) rgba(255, 255, 255, 0.05);
 }
 
-.video-carousel-container:hover .video-carousel-track {
-  animation-play-state: paused;
+.video-carousel-mask::-webkit-scrollbar {
+  height: 8px;
+}
+.video-carousel-mask::-webkit-scrollbar-thumb {
+  background: var(--neon);
+  border-radius: 999px;
+  box-shadow: 0 0 15px var(--neon-shadow);
+}
+.video-carousel-mask::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
 }
 
-@keyframes scroll-reels {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%); /* Scroll the entire duplicated set */
-  }
-}
-
-.video-slide {
-  flex: 0 0 300px; /* Fixed width for better control */
-  border-radius: 14px;
-  overflow: hidden;
+/* Scroll Buttons */
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(58, 247, 127, 0.1);
+  border: 1px solid rgba(58, 247, 127, 0.4);
+  color: var(--neon);
+  font-size: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+.scroll-btn:hover {
+  background: var(--neon);
+  color: var(--bg-dark);
+  box-shadow: 0 0 30px var(--neon-shadow);
+  transform: translateY(-50%) scale(1.1);
+}
+.scroll-btn.left {
+  left: 20px;
+}
+.scroll-btn.right {
+  right: 20px;
+}
+
+/* Video Cards */
+.video-card {
+  flex: 0 0 320px;
+  scroll-snap-align: center;
+  border-radius: 16px;
+  overflow: hidden;
   background: #000;
-  position: relative;
   transition: all 0.4s ease;
+  position: relative;
 }
-
-.media-video {
-  width: 100%;
-  height: 200px; /* Fixed height for uniformity */
-  object-fit: cover;
-  border-radius: 14px;
-  filter: brightness(0.7) grayscale(0.2); /* Subtle dim/desaturation for professional look */
-  transition: transform 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease;
-}
-
-.video-slide:hover .media-video {
+.video-card:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 25px var(--neon-shadow);
-  filter: brightness(1) grayscale(0); /* Full color on hover */
+  box-shadow: 0 0 35px rgba(58, 247, 127, 0.3);
+}
+.video-card iframe {
+  width: 100%;
+  height: 200px;
+  border: none;
 }
 
-/* --- 🚀 Motion & Typography Grids --- */
-.motion-grid-section {
-    padding: 60px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+/* Scroll Progress Bar */
+.scroll-progress-bar {
+  position: relative;
+  width: 70%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin: 30px auto 0;
+  overflow: hidden;
 }
-.media-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 30px;
-}
-.media-grid .media-video {
-    width: 100%;
-    height: 100%;
-    min-height: 200px;
-    max-height: 300px;
-    object-fit: cover;
-    border-radius: 12px;
-    cursor: pointer;
-    filter: brightness(0.8);
-}
-.media-grid .media-video:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 20px rgba(58, 247, 127, 0.2);
-    filter: brightness(1);
+.scroll-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--neon);
+  box-shadow: 0 0 15px var(--neon-shadow);
+  border-radius: 2px;
+  transition: width 0.25s ease;
 }
 
 /* =======================
-    👥 CLIENTS & STATS
+ 🚀 MOTION & TYPOGRAPHY
+======================= */
+.motion-grid-section {
+  padding: 100px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 26px;
+  margin-top: 40px;
+}
+
+.media-grid iframe {
+  width: 100%;
+  height: 220px;
+  border-radius: 14px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.media-grid iframe:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px var(--neon-shadow);
+}
+
+/* =======================
+ 👥 CLIENTS
 ======================= */
 .clients-section {
-  margin: 100px 0;
   text-align: center;
-  padding: 60px 20px;
+  padding: 100px 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-  position: relative;
 }
 
 .client-stats {
@@ -383,59 +460,46 @@ body {
   justify-content: center;
   gap: 50px;
   margin-top: 50px;
-  margin-bottom: 60px;
+  flex-wrap: wrap;
 }
 
 .stat-card {
-  background: var(--panel);
-  padding: 30px 40px;
-  border-radius: 16px;
-  border: 1px solid var(--glass);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  background: var(--glass);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  padding: 40px 60px;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(58, 247, 127, 0.1);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 50px rgba(58, 247, 127, 0.25);
 }
 
 .stat-num {
-  font-size: 48px;
+  font-size: 52px;
   font-weight: 800;
   color: var(--neon);
+  text-shadow: 0 0 20px var(--neon-shadow);
 }
 
 .stat-label {
   color: var(--muted);
   font-size: 18px;
-  font-weight: 500;
+  margin-top: 8px;
 }
-
-.client-reacts {
-  display: flex;
-  overflow-x: auto;
-  gap: 30px;
-  padding: 40px 60px;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-}
-
-.react-card {
-  min-width: 420px;
-  background: var(--glass);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 18px;
-  padding: 28px;
-  scroll-snap-align: start;
-  flex-shrink: 0;
-  backdrop-filter: blur(6px);
-}
-/* ... rest of client-reacts styling ... */
 
 /* =======================
-    ✨ ANIMATIONS & RESPONSIVE
+ ✨ ANIMATIONS & RESPONSIVE
 ======================= */
-/* Your existing fade-in and responsive media queries are good and maintained */
 .fade-in {
   opacity: 0;
   transform: translateY(40px);
-  transition: all 0.8s ease;
+  transition: opacity 1s ease, transform 1s ease;
 }
+
 .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
@@ -443,313 +507,13 @@ body {
 
 @media (max-width: 900px) {
   .hero-title {
-    font-size: 56px;
+    font-size: 48px;
   }
-  .category-buttons {
-    padding: 14px;
-    gap: 12px;
-  }
-  .video-slide {
+  .video-card {
     flex: 0 0 240px;
   }
-  .media-video {
-    height: 160px;
-  }
-  .client-reacts {
-    padding: 20px;
-  }
-  .react-card {
-    min-width: 90vw;
-  }
-}/* =======================
-    🎞️ REELS & MEDIA SECTIONS
-======================= */
-
-/* --- 🔥 Featured Reels (Clean Carousel Strip - DEMO 1) --- */
-.video-carousel-container {
-  width: 100%;
-  position: relative;
-  margin: 0 auto 80px;
-  text-align: center; /* Centers the section-header */
-  
-  /* Visual container strip */
-  background: var(--bg-medium); /* Slightly lighter dark color for definition */
-  padding: 40px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.video-carousel-mask {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  /* Mask gradient to fade reels at edges, adding a professional touch */
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 5%,
-    black 95%,
-    transparent 100%
-  );
-}
-
-.video-carousel-track {
-  display: flex;
-  gap: 24px;
-  padding: 0 40px; /* Initial offset for masked edges */
-  animation: scroll-reels 22s linear infinite;
-  white-space: nowrap; /* Prevent wrapping */
-  width: fit-content;
-}
-
-/* ... (scroll-reels animation remains the same) ... */
-/* Your existing @keyframes scroll-reels is correct */
-
-
-.video-slide {
-  flex: 0 0 300px; /* Fixed width for uniformity */
-  border-radius: 12px; /* Slightly rounded corners */
-  overflow: hidden;
-  cursor: pointer;
-  background: var(--bg-dark);
-  position: relative;
-  transition: all 0.4s ease;
-  
-  /* Subtle border when inactive */
-  border: 1px solid rgba(255, 255, 255, 0.1); 
-}
-
-.media-video {
-  width: 100%;
-  height: 200px; 
-  object-fit: cover;
-  border-radius: 12px;
-  /* Subtle dim/desaturation for professional look (Demo 1) */
-  filter: brightness(0.75) grayscale(0.2); 
-  transition: transform 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease;
-}
-
-.video-slide:hover .media-video {
-  transform: scale(1.02); /* Less aggressive zoom for strip */
-  box-shadow: 0 0 25px var(--neon-shadow);
-  filter: brightness(1) grayscale(0); /* Full color on hover */
-}
-
-
-/* --- 🚀 Motion & Typography Grids (Clean Grid Look) --- */
-
-.motion-grid-section {
-    padding: 60px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.media-grid {
-    display: grid;
-    /* Uses a minimum of 300px width per column, up to 4 columns */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-    gap: 30px;
-    margin-top: 30px;
-}
-
-/* Ensure the video elements within the grid share the professional look */
-.media-grid .video-slide {
-    /* Reset flex properties for grid context */
-    flex: initial; 
-    border-radius: 12px;
-    height: 100%;
-    /* Keep the border and background styling from the .video-slide */
-}
-
-.media-grid .media-video {
-    width: 100%;
-    height: 100%; 
-    min-height: 200px;
-    max-height: 300px; 
-    object-fit: cover;
-    border-radius: 12px;
-    cursor: pointer;
-    /* Use the same filters for consistency */
-    filter: brightness(0.75) grayscale(0.2);
-}
-
-.media-grid .video-slide:hover .media-video {
-    transform: scale(1.02);
-    box-shadow: 0 0 20px rgba(58, 247, 127, 0.2);
-    filter: brightness(1);
-}
-/* =======================
-    🌌 BASE & GLOBAL (Keeping existing colors)
-======================= */
-:root {
-  --bg-dark: #020202;
-  --bg-medium: #0c0d0c;
-  --neon: #3af77f;
-  --neon-shadow: rgba(58, 247, 127, 0.4);
-  --muted: #9aa19a;
-  --glass: rgba(255, 255, 255, 0.05);
-  --text-light: #eaf7ee;
-  --section-red: #c72c2c; /* The red color from your reference */
-}
-
-/* ... (Your existing Topbar, Buttons, Hero, CategoryNav styles remain) ... */
-
-
-/* =======================
-    🎞️ REELS & MEDIA SECTIONS (Existing Styles)
-    (The previous "Featured Reels" cinematic strip styling for #reels is here)
-======================= */
-
-/* --- 🔥 Featured Reels (Clean Carousel Strip) --- */
-.video-carousel-container {
-  /* ... (your existing styling for the auto-scrolling reels remains) ... */
-}
-/* ... (video-carousel-mask, video-carousel-track, video-slide styles remain for reels) ... */
-
-
-/* =======================
-    🚀 MOTION GRAPHICS (NEW CINEMATIC SCROLL - based on your image)
-======================= */
-.motion-graphics-cinematic-scroll {
-    padding: 80px 0;
-    margin: 0 auto;
-    background: var(--bg-dark); /* Ensure dark background */
-    text-align: center;
-    position: relative;
-    overflow: hidden; /* Hide overflowing parts of the scroll */
-}
-
-.motion-graphics-cinematic-scroll .section-header {
-    margin-bottom: 60px; /* More space for the prominent title */
-}
-
-.motion-graphics-cinematic-scroll .section-title {
-    font-family: serif; /* To match your reference image's font style for "MOTION GRAPHICS" */
-    font-size: 80px; /* Large font size */
-    font-weight: 700;
-    color: var(--text-light); /* Or white */
-    letter-spacing: 5px;
-    line-height: 1; /* Adjust line height for big text */
-    text-transform: uppercase;
-    position: relative;
-    z-index: 2; /* Ensure text is above the background strip */
-}
-
-.motion-graphics-cinematic-scroll .section-sub {
-    font-size: 20px;
-    color: var(--muted);
-    margin-top: 15px;
-    position: relative;
-    z-index: 2;
-}
-
-
-/* The main horizontal red strip container */
-.motion-video-strip-container {
-    position: relative;
-    width: 100%;
-    /* Use the red color as the background for the strip area */
-    background: var(--section-red); 
-    padding: 30px 0; /* Vertical padding for the videos inside the strip */
-    display: flex; /* For horizontal arrangement */
-    justify-content: center; /* Center initial view */
+  .client-stats {
+    flex-direction: column;
     align-items: center;
-    overflow-x: scroll; /* Enable horizontal scrolling */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-    scroll-snap-type: x mandatory; /* Snap to videos */
-    scroll-behavior: smooth; /* Smooth scrolling when snapped */
-    scrollbar-width: none; /* Hide scrollbar for Firefox */
-    z-index: 1; /* Below text */
-
-    /* Fade effect on left and right edges */
-    mask-image: linear-gradient(
-        to right,
-        transparent 0%,
-        black 10%,
-        black 90%,
-        transparent 100%
-    );
-    -webkit-mask-image: linear-gradient(
-        to right,
-        transparent 0%,
-        black 10%,
-        black 90%,
-        transparent 100%
-    );
-}
-
-/* Hide scrollbar for Webkit browsers (Chrome, Safari) */
-.motion-video-strip-container::-webkit-scrollbar {
-    display: none;
-}
-
-.motion-video-strip-item {
-    flex: 0 0 auto; /* Don't grow, don't shrink, base on content width */
-    margin: 0 20px; /* Space between videos */
-    position: relative;
-    scroll-snap-align: center; /* Snap to center of item */
-    transition: all 0.3s ease-out; /* Smooth transition for scale/opacity */
-}
-
-.motion-video-strip-item video {
-    border-radius: 8px; /* Slightly rounded corners for the videos */
-    object-fit: cover;
-    display: block; /* Remove extra space below video */
-    filter: brightness(0.8); /* Slightly dim default */
-    transition: filter 0.3s ease;
-}
-
-/* Central / Active video style */
-.motion-video-strip-item.center video {
-    width: 600px; /* Larger central video */
-    height: 338px; /* 16:9 aspect ratio */
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
-    filter: brightness(1); /* Full brightness for center */
-}
-
-/* Side videos style */
-.motion-video-strip-item:not(.center) video {
-    width: 300px; /* Smaller side videos */
-    height: 169px; /* 16:9 aspect ratio */
-    opacity: 0.6; /* Faded on sides */
-}
-
-/* Optional: Hover effect for side videos to make them clearer */
-.motion-video-strip-item:not(.center):hover video {
-    opacity: 0.8;
-    filter: brightness(1);
-    transform: scale(1.05);
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 1200px) {
-    .motion-graphics-cinematic-scroll .section-title {
-        font-size: 60px;
-    }
-    .motion-video-strip-item.center video {
-        width: 500px;
-        height: 281px;
-    }
-    .motion-video-strip-item:not(.center) video {
-        width: 250px;
-        height: 140px;
-    }
-}
-
-@media (max-width: 768px) {
-    .motion-graphics-cinematic-scroll .section-title {
-        font-size: 40px;
-        letter-spacing: 2px;
-    }
-    .motion-graphics-cinematic-scroll .section-sub {
-        font-size: 16px;
-    }
-    .motion-video-strip-item.center video {
-        width: 90vw; /* Occupy most of the viewport width */
-        height: calc(90vw / 16 * 9);
-    }
-    .motion-video-strip-item:not(.center) video {
-        width: 60vw;
-        height: calc(60vw / 16 * 9);
-    }
+  }
 }
