@@ -26,9 +26,12 @@ export default function VideoGrid() {
   const [projects, setProjects] = useState(0);
   const maskRef = useRef(null);
   const fillRef = useRef(null);
-  const autoScrollRef = useRef(null);
+  const rafRef = useRef(null);
+  const pauseTimeoutRef = useRef(null);
+  const directionRef = useRef(1); // 1 => right, -1 => left
+  const isPausedRef = useRef(false);
 
-  // 🎥 YouTube Embed Renderer
+  // render YouTube iframe
   const renderMedia = (src, key) => {
     let videoId = "";
     if (src.includes("v=")) videoId = src.split("v=")[1].split("&")[0];
@@ -43,12 +46,12 @@ export default function VideoGrid() {
           frameBorder="0"
           allow="autoplay; encrypted-media; fullscreen"
           allowFullScreen
-        ></iframe>
+        />
       </div>
     );
   };
 
-  // ✨ Fade-In Animation
+  // fade-in observer (keeps your existing behavior)
   useEffect(() => {
     const fadeEls = document.querySelectorAll(".fade-in");
     const observer = new IntersectionObserver(
@@ -62,7 +65,7 @@ export default function VideoGrid() {
     return () => observer.disconnect();
   }, []);
 
-  // 🔢 Animated Counter
+  // counters (same as before)
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) =>
@@ -89,65 +92,115 @@ export default function VideoGrid() {
     return () => observer.disconnect();
   }, []);
 
-  // 🔄 Scroll progress update
+  // update progress bar while user scrolls
   useEffect(() => {
     const mask = maskRef.current;
     const fill = fillRef.current;
     if (!mask || !fill) return;
 
-    const updateProgress = () => {
+    const update = () => {
       const maxScroll = Math.max(1, mask.scrollWidth - mask.clientWidth);
       const pct = (mask.scrollLeft / maxScroll) * 100;
       fill.style.width = `${pct}%`;
     };
 
-    mask.addEventListener("scroll", updateProgress);
-    updateProgress();
-    return () => mask.removeEventListener("scroll", updateProgress);
+    mask.addEventListener("scroll", update);
+    update();
+    return () => mask.removeEventListener("scroll", update);
   }, []);
 
-  // ▶️ Auto Scroll Logic
+  // helper: pause auto-scroll for milliseconds (on interaction)
+  const pauseAutoScroll = (ms = 2000) => {
+    isPausedRef.current = true;
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    pauseTimeoutRef.current = setTimeout(() => {
+      isPausedRef.current = false;
+      startAutoScroll(); // resume
+    }, ms);
+  };
+
+  // auto-scroll using requestAnimationFrame (smooth)
+  const startAutoScroll = () => {
+    const mask = maskRef.current;
+    if (!mask || isPausedRef.current) return;
+
+    const speed = 0.6; // px per frame; lower = slower
+    const step = () => {
+      if (!mask) return;
+      // move
+      mask.scrollLeft += speed * directionRef.current;
+
+      // bounce at edges: reverse direction when reached
+      if (mask.scrollLeft >= mask.scrollWidth - mask.clientWidth - 1) {
+        directionRef.current = -1;
+      } else if (mask.scrollLeft <= 0) {
+        directionRef.current = 1;
+      }
+
+      // sync progress (so even without user scroll event, progress fill updates)
+      if (fillRef.current) {
+        const maxScroll = Math.max(1, mask.scrollWidth - mask.clientWidth);
+        const pct = (mask.scrollLeft / maxScroll) * 100;
+        fillRef.current.style.width = `${pct}%`;
+      }
+
+      rafRef.current = requestAnimationFrame(step);
+    };
+
+    // cancel previous and start
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(step);
+  };
+
+  // initialize auto-scroll and interaction listeners
   useEffect(() => {
     const mask = maskRef.current;
     if (!mask) return;
 
-    let scrollSpeed = 1.3; // adjust scroll speed
-    let direction = 1; // 1 = right, -1 = left
+    // safest: start auto-scroll after short delay
+    const startTimer = setTimeout(() => startAutoScroll(), 400);
 
-    const autoScroll = () => {
-      mask.scrollLeft += scrollSpeed * direction;
-      if (
-        mask.scrollLeft >= mask.scrollWidth - mask.clientWidth - 2 ||
-        mask.scrollLeft <= 0
-      ) {
-        direction *= -1; // reverse direction at edges
-      }
+    // interactions: pause on mouseenter, mousedown, touchstart, wheel
+    const onEnter = () => pauseAutoScroll(2500);
+    const onDown = () => pauseAutoScroll(2500);
+    const onWheel = () => pauseAutoScroll(1500);
+    const onLeave = () => {
+      // small resume delay after leaving
+      if (!isPausedRef.current) startAutoScroll();
     };
 
-    autoScrollRef.current = setInterval(autoScroll, 20);
+    mask.addEventListener("mouseenter", onEnter, { passive: true });
+    mask.addEventListener("mouseleave", onLeave, { passive: true });
+    mask.addEventListener("mousedown", onDown, { passive: true });
+    mask.addEventListener("touchstart", onDown, { passive: true });
+    mask.addEventListener("wheel", onWheel, { passive: true });
 
-    // Pause on hover or touch
-    const stopScroll = () => clearInterval(autoScrollRef.current);
-    const resumeScroll = () =>
-      (autoScrollRef.current = setInterval(autoScroll, 20));
-
-    mask.addEventListener("mouseenter", stopScroll);
-    mask.addEventListener("mouseleave", resumeScroll);
-    mask.addEventListener("touchstart", stopScroll);
-    mask.addEventListener("touchend", resumeScroll);
-
+    // cleanup
     return () => {
-      clearInterval(autoScrollRef.current);
-      mask.removeEventListener("mouseenter", stopScroll);
-      mask.removeEventListener("mouseleave", resumeScroll);
-      mask.removeEventListener("touchstart", stopScroll);
-      mask.removeEventListener("touchend", resumeScroll);
+      clearTimeout(startTimer);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+      mask.removeEventListener("mouseenter", onEnter);
+      mask.removeEventListener("mouseleave", onLeave);
+      mask.removeEventListener("mousedown", onDown);
+      mask.removeEventListener("touchstart", onDown);
+      mask.removeEventListener("wheel", onWheel);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 🎯 Manual Scroll Buttons
-  const scrollLeft = () => maskRef.current.scrollBy({ left: -400, behavior: "smooth" });
-  const scrollRight = () => maskRef.current.scrollBy({ left: 400, behavior: "smooth" });
+  // manual scroll buttons - also pause auto scroll for a bit
+  const scrollLeft = () => {
+    if (!maskRef.current) return;
+    maskRef.current.scrollBy({ left: -420, behavior: "smooth" });
+    pauseAutoScroll(2000);
+  };
+  const scrollRight = () => {
+    if (!maskRef.current) return;
+    maskRef.current.scrollBy({ left: 420, behavior: "smooth" });
+    pauseAutoScroll(2000);
+  };
 
   return (
     <div className="video-sections">
@@ -161,11 +214,29 @@ export default function VideoGrid() {
         </div>
 
         {/* Scroll Buttons */}
-        <button className="scroll-btn left" onClick={scrollLeft}>◀</button>
-        <button className="scroll-btn right" onClick={scrollRight}>▶</button>
+        <button
+          className="scroll-btn left"
+          onClick={scrollLeft}
+          aria-label="Scroll left"
+        >
+          ◀
+        </button>
+        <button
+          className="scroll-btn right"
+          onClick={scrollRight}
+          aria-label="Scroll right"
+        >
+          ▶
+        </button>
 
         {/* Video Carousel */}
-        <div className="video-carousel-mask" ref={maskRef}>
+        <div
+          className="video-carousel-mask"
+          ref={maskRef}
+          /* allow horizontal touch gestures */
+          style={{ touchAction: "pan-x" }}
+        >
+          {/* duplicate the list once to make the loop feel continuous */}
           {[...sections.reels, ...sections.reels].map((v, i) =>
             renderMedia(v.src, `reel-${i}`)
           )}
