@@ -1,28 +1,14 @@
 {
-  "name": "growtoprove-final",
-  "private": true,
-  "version": "1.0.0",
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
   "dependencies": {
-    "framer-motion": "11.2.6",
     "next": "14.2.4",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@types/node": "^20.11.30",
-    "@types/react": "19.2.2",
-    "@types/react-dom": "^18.3.0",
-    "autoprefixer": "10.4.16",
-    "postcss": "8.4.31",
-    "tailwindcss": "3.4.1",
-    "typescript": "5.4.5"
+    "typescript": "^5.6.2",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.7"
   },
-  "engines": {
-    "node": ">=18"
-  }
+  // Optional: silence the node engine warning and use Vercel’s default
+  "engines": { "node": "20.x" }
 }
